@@ -3,7 +3,6 @@ import NotePreview from "@/app/@modal/(.)notes/[id]/NotePreview.client";
 import { fetchNoteById } from "@/lib/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
-// import { notFound } from "next/navigation";
 
 interface NoteModalProps {
   params: Promise<{ id: string }>;

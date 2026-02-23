@@ -7,18 +7,17 @@ import { useDebouncedCallback } from "use-debounce";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import css from "./Notes.client.module.css";
 import NoteList from "@/components/NoteList/NoteList";
-import NoteForm from "@/components/NoteForm/NoteForm";
-import Modal from "@/components/Modal/Modal";
 import { Toaster } from "react-hot-toast";
 import Pagination from "@/components/Pagination/Pagination";
 import { NoteTag } from "@/types/note";
+import Link from "next/link";
 
 interface NotesClientProps {
   activeTag?: NoteTag | string;
 }
 
 export default function NotesClient({ activeTag }: NotesClientProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -57,9 +56,9 @@ export default function NotesClient({ activeTag }: NotesClientProps) {
           />
         )}
 
-        <button className={css.button} onClick={() => setIsOpen(true)}>
+        <Link href="/notes/action/create" className={css.button}>
           Create note +
-        </button>
+        </Link>
       </header>
 
       {data &&
@@ -68,12 +67,6 @@ export default function NotesClient({ activeTag }: NotesClientProps) {
         ) : (
           <p>No notes found.</p>
         ))}
-
-      {isOpen && (
-        <Modal onClose={() => setIsOpen(false)}>
-          <NoteForm  />
-        </Modal>
-      )}
     </div>
   );
 }

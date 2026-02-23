@@ -1,21 +1,24 @@
 'use client'
 import { useRouter } from "next/navigation";
-// import { Formik, Form, Field, ErrorMessage } from "formik";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import * as Yup from "yup";
-// import type { NoteTag } from "../../types/note";
-// import { createNote } from "../../lib/api";
 import css from "./NoteForm.module.css";
 import { useNoteStore } from "@/lib/store/noteStore";
 import { NoteTag } from "@/types/note";
 import { createNote } from "@/lib/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-interface NoteFormProps {
- formAction?: (formData: FormData) => void | Promise<void>;
-}
-export default function NoteForm({ formAction }: NoteFormProps) {
+export default function NoteForm() {
+    const queryClient = useQueryClient();
   const router = useRouter();
   const { draft, setDraft, clearDraft } = useNoteStore();
+
+  const mutation = useMutation({
+    mutationFn: createNote,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      clearDraft();
+      router.back();
+    },
+  });
 
   const handleSubmit = async (formData: FormData) => {
     const newNote = {
@@ -23,10 +26,7 @@ export default function NoteForm({ formAction }: NoteFormProps) {
       content: formData.get("content") as string,
       tag: formData.get("tag") as NoteTag,
     }
-    await createNote(newNote);
-
-    clearDraft();
-    router.back();
+    await mutation.mutateAsync(newNote);
   };
 
   return (
@@ -74,10 +74,13 @@ export default function NoteForm({ formAction }: NoteFormProps) {
         </div>
 
         <div className={css.actions}>
-        
+        <button type="button" className={css.cancelButton} onClick={router.back}>
+            Cancel
+          </button>
           <button
-            type="submit"
-            className={css.submitButton}
+          type="submit"
+          className={css.submitButton}
+            disabled={mutation.isPending}
           >
             Create note +
           </button>
