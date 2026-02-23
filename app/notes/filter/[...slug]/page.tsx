@@ -11,7 +11,7 @@ import { Metadata } from "next";
 interface FilterPageProps {
   params: Promise<{ slug: string[] }>;
 }
-export async function generateMetadate({ params }: FilterPageProps): 
+export async function generateMetadata({ params }: FilterPageProps): 
   Promise<Metadata> {
   const resolvedParams = await params;
   const slug = resolvedParams.slug || [];
