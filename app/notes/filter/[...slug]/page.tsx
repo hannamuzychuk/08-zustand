@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: FilterPageProps):
     openGraph: {
       title,
       description,
-      url: "",
+      url: `https://hannamuzychuk-08-zustand.vercel.app/notes/${tag}`,
       images: [
         {
            url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",

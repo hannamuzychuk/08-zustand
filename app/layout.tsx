@@ -28,15 +28,15 @@ export const metadata: Metadata = {
   description: "NoteHub is a modern note managment application build with Next.js. Create, filter and manage your notes efficiently.",
   openGraph: {
     type: "website",
-    url: "",
+    url: "https://hannamuzychuk-08-zustand.vercel.app",
     title: "NoteHub - Smart Note Managment App",
   description: "NoteHub is a modern note managment application build with Next.js. Create, filter and manage your notes efficiently.",
     siteName: "NoteHub",
     images: [
       {
         url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
-        width: "1200", 
-        height: "630",
+        width: 1200, 
+        height: 630,
         alt: "NoteHub Page Preview",
         }
       ]  
@@ -52,7 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} ${roboto.variable}`}>
+      <body className={`${roboto.variable}`}>
         <TanStackProvider>
           <Header />
           <main>{children}</main>
