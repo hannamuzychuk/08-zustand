@@ -6,10 +6,40 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
+import { Metadata } from "next";
 
 interface FilterPageProps {
   params: Promise<{ slug: string[] }>;
 }
+export async function generateMetadate({ params }: FilterPageProps): 
+  Promise<Metadata> {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug || [];
+  const tag = slug[0] || "all";
+  const activeTag = tag === "all" ? "All Notes" : `${tag} Notes`;
+
+  const title = `Notes filtered by ${activeTag}`;
+  const description = tag === "all" ? "Browse all notes in Notehub" : `Browse notes filtered by ${tag} category in NoteHub `;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "",
+      images: [
+        {
+           url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          width: 1200,
+          height: 630,
+          alt: `Filtered by ${activeTag}`,
+        }
+      ]
+
+    }
+  }
+  }
 
 export default async function FilterPage({ params }: FilterPageProps) {
    const resolvedParams = await params;
