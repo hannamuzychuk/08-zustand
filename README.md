@@ -1,92 +1,133 @@
-📝 NoteHub - Advanced Routing & Notes Management
-NoteHub is a modern note management application built with Next.js (App Router). This project demonstrates advanced routing techniques, a mix of Server and Client Components, and efficient data synchronization.
+# NoteHub
 
-🚀 Key Features
-Tag Filtering: Leverages Parallel Routes (@sidebar) to create an independent navigation menu for filtering notes.
+**NoteHub** is a modern note management application built with **Next.js (App Router)**. It supports both **SSR** and **CSR**, uses **TypeScript**, **Zustand** for draft state management, **TanStack Query** for API requests, and **CSS Modules** for styling.
 
-Dynamic Route Handling: Uses Catch-all / Dynamic routes (/notes/filter/[tag]) to manage note categories and server-side logic.
+---
 
-Note Preview (Modal): Implements Intercepting Routes ((.)[id]) to open note details in a modal overlay, maintaining the background state and URL context.
+## Features
 
-Hybrid Rendering (SSR + CSR): Combines TanStack Query prefetching on the server with client-side hydration for a seamless user experience.
+- Create, edit, and filter notes.
+- Draft support: unsaved data is stored in **Zustand** and persisted in **localStorage**.
+- Search notes with **debounced input** for better performance.
+- Pagination for notes list.
+- SEO optimized: metadata and Open Graph tags for all pages.
+- Global **Roboto** font via `next/font/google`.
+- Intuitive interface with **Create Note** and **Cancel** buttons.
 
-Search & Pagination: Features a debounced search bar and interactive pagination to handle large datasets efficiently.
+---
 
-Custom 404 Page: A dedicated "Not Found" page for handling invalid URLs.
+## Technologies
 
-🛠 Tech Stack
-Framework: Next.js (App Router)
+- [Next.js](https://nextjs.org/) (App Router)
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [Zustand](https://zustand-demo.pmnd.rs/)
+- [Axios](https://axios-http.com/)
+- CSS Modules
 
-Language: TypeScript
+---
 
-State Management & Fetching: TanStack Query (React Query) & Axios
+## Project Structure
 
-Styling: CSS Modules
-
-Utility: use-debounce, react-hot-toast
-
-Formatting: Prettier
-
-To expand the Project Structure section based on your folder hierarchy, you can use this detailed breakdown. It clearly explains what each Next.js specific folder (Slots and Intercepting Routes) is doing in your project.
-
-🔗 Live Demo
-You can view the live version of the project here:
-
-NoteHub on Vercel ((https://07-routing-nextjs-mtcf.vercel.app/))
-
-🛠 Deployment Steps on Vercel:
-Push your code to your GitHub repository.
-
-Import the project into the Vercel Dashboard.
-
-Configure your Environment Variables (like NEXT_PUBLIC_API_URL) if applicable.
-
-Vercel will automatically build and deploy your App Router project.
-
-📁 Project Structure
-The project follows a modular Next.js App Router structure, utilizing advanced routing patterns for a seamless user experience:
-
-Plaintext
 /app
-├── notes/
-│ ├── [id]/ # Hard-navigation route for note details
-│ ├── @modal/ # Parallel Slot for the note preview modal
-│ │ └── (.)[id]/ # Intercepting Route to show modal on soft-nav
-│ └── filter/
-│ ├── [tag]/ # Dynamic route for tag-based note lists
-│ └── @sidebar/ # Parallel Slot for the category navigation
-│ └── page.tsx # Sidebar content (Notes filter menu)
-├── components/ # Reusable UI components
-├── lib/ # API utilities and Axios configurations
-└── types/ # TypeScript type definitions (e.g., NoteTag)
+/notes
+/action
+/create
+page.tsx
+/filter
+[...slug]
+page.tsx
+/notes/[id]
+page.tsx
+layout.tsx
+not-found.tsx
+/components
+Header/Header.tsx
+Footer/Footer.tsx
+NoteForm/NoteForm.tsx
+NoteList/NoteList.tsx
+Pagination/Pagination.tsx
+SearchBox/SearchBox.tsx
+/lib
+/api
+notes.ts
+/store
+noteStore.ts
+/types
+note.ts
 
-🔑 Key Routing Concepts Used:
-Parallel Routes (@modal, @sidebar): Used to render multiple pages simultaneously in the same layout (e.g., showing the Sidebar alongside the Note List).
+- **components** — reusable UI components.
+- **lib/api** — Axios-based API calls.
+- **lib/store/noteStore.ts** — Zustand store for drafts.
+- **types/note.ts** — TypeScript types and interfaces for notes.
 
-Intercepting Routes ((.)[id]): Allows the application to load a route inside a modal when navigating from the list, while still allowing a full-page reload at the same URL to show the standalone detail page.
+---
 
-Dynamic Segments ([id], [tag]): Enables the application to handle unique IDs for notes and various category tags dynamically.
+## Installation
 
-Default Files (default.tsx): Essential for Parallel Routes to provide a fallback when a slot does not have a matching route during navigation.
-🔧 Installation & Setup
-Clone the repository:
+1. Clone the repository:
 
-Bash
-git clone https://github.com/your-username/07-routing-nextjs.git
+```bash
+git clone https://github.com/yourusername/08-zustand.git
+cd 08-zustand
+
 Install dependencies:
 
-Bash
 npm install
-Run the development server:
+# or
+yarn install
 
-Bash
+Run locally:
+
 npm run dev
-View the app:
-Navigate to http://localhost:3000.
+# or
+yarn dev
 
-📜 Technical Notes
-Route Redirection: The application automatically redirects users from /notes to /notes/filter/all.
+Open http://localhost:3000
+ in your browser.
 
-Type Safety: Strict TypeScript implementation using Type Assertions (as NoteTag) to handle dynamic URL parameters safely.
+Usage
+Creating a Note
 
-Hydration: Used HydrationBoundary and dehydrate to ensure data is available immediately upon page load without flickering.
+Go to /notes/action/create.
+
+Fill in Title, Content, and Tag fields.
+
+The draft is saved automatically as you type.
+
+Click Create note + to save or Cancel to return without losing the draft.
+
+Filtering Notes
+
+Choose a category from the filter menu or enter a search query.
+
+Notes update automatically with debounce.
+
+SEO & Open Graph
+
+All pages include configured title, description, and og:image.
+
+Links will display correctly in social networks.
+
+Draft State
+
+Each form field is linked to the global draft state in Zustand.
+
+Draft is persisted in localStorage using persist middleware.
+
+Draft is cleared after successfully creating a note.
+
+Demo
+
+View live on Vercel
+https://hannamuzychuk-08-zustand.vercel.app/
+
+Scripts
+
+npm run dev — run development server
+
+npm run build — build for production
+
+npm run start — run production build
+```
