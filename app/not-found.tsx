@@ -1,14 +1,13 @@
-"use client";
 import { Metadata } from "next";
 import css from "./page.module.css";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "404 - Page Not Found",
-  description: "The page you ale looking for does not exist un the NoteHun application.",
+  description: "The page you are looking for does not exist in the NoteHub application.",
  openGraph: {
     title: "404 - Page Not Found",
-    description: "The page you ale looking for does not exist un the NoteHun application.",
+    description: "The page you are looking for does not exist in the NoteHub application.",
     url: "",
 
     images: [
@@ -23,14 +22,14 @@ export const metadata: Metadata = {
 }
 
 export default function NotFound() {
-  const router = useRouter();
+
   return (
     <>
       <h1 className={css.title}>404 - Page not found</h1>
       <p className={css.description}>
         Sorry, the page you are looking for does not exist.
       </p>
-      <button onClick={() => router.replace("/")}>Go back!</button>
+      <Link href="/">Go back!</Link>
     </>
   );
 }
