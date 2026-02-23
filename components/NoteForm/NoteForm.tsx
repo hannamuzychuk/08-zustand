@@ -6,6 +6,7 @@ import { NoteTag } from "@/types/note";
 import { createNote } from "@/lib/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+
 export default function NoteForm() {
     const queryClient = useQueryClient();
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function NoteForm() {
         <div className={css.formGroup}>
           <label htmlFor="title">Title</label>
         <input id="title" type="text" name="title" value={draft.title}
-         onChange={(e) => setDraft({...draft, title: e.target.value})} required className={css.input} />
+         onChange={(e) => setDraft({title: e.target.value})} required className={css.input} />
        
         </div>
 
@@ -46,7 +47,7 @@ export default function NoteForm() {
           name="content"
           value={draft.content}
           onChange={(e) =>
-            setDraft({ ...draft, content: e.target.value })
+            setDraft({content: e.target.value })
           }
           rows={8}
           required
@@ -61,7 +62,7 @@ export default function NoteForm() {
           name="tag"
           value={draft.tag}
           onChange={(e) =>
-            setDraft({ tag: e.target.value as NoteTag})
+            setDraft({tag: e.target.value as NoteTag})
           }
           required
           className={css.select}>
@@ -74,7 +75,7 @@ export default function NoteForm() {
         </div>
 
         <div className={css.actions}>
-        <button type="button" className={css.cancelButton} onClick={router.back}>
+        <button type="button" className={css.cancelButton} onClick={() => router.back()}>
             Cancel
           </button>
           <button
